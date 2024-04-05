@@ -24,9 +24,9 @@
     <div class="sidebar" data-color="white" data-active-color="danger">
       <div class="logo">
          <a href="#" class="simple-text logo-normal">
-          <div class="logo-image-big">
-            <img src="{{ asset('admin/img/logolrv.png') }}" alt="Ảnh của tôi">
-          </div>
+{{--          <div class="logo-image-big">--}}
+{{--            <img src="{{ asset('admin/img/logolrv.png') }}" alt="Ảnh của tôi">--}}
+{{--          </div>--}}
         </a>
       </div>
       <div class="sidebar-wrapper">
@@ -67,6 +67,12 @@
               <p>User</p>
             </a>
           </li>
+            <li>
+                <a href="{{ url('backend/customers') }}">
+                    <i class="fa fa-users" aria-hidden="true"></i>
+                    <p>Customers</p>
+                </a>
+            </li>
           <li>
             <a href="{{ url('backend/logout') }}">
               <i class="fa fa-sign-out" aria-hidden="true"></i>
@@ -209,7 +215,7 @@
           <div class="row">
             <div class="credits ml-auto">
               <span class="copyright" style="font-size: 18px;">
-                © 2023, made with <i class="fa fa-heart heart"></i> by Suplement Home
+                © 2023, made with <i class="fa fa-heart heart"></i> by Tphones
               </span>
             </div>
           </div>

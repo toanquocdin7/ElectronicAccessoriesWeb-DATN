@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8" />
   <link rel="apple-touch-icon" sizes="76x76" href="../admin/img/apple-icon.png">
-  <link rel="icon" type="image/png" href="{{ asset('admin/img/lrvlogo.png') }}">
+{{--  <link rel="icon" type="image/png" href="{{ asset('admin/img/lrvlogo.png') }}">--}}
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <title>
     User - Update
@@ -24,15 +24,15 @@
     <div class="sidebar" data-color="white" data-active-color="danger">
       <div class="logo">
          <a href="#" class="simple-text logo-normal">
-          <div class="logo-image-big">
-            <img src="{{ asset('admin/img/logolrv.png') }}" alt="Ảnh của tôi">
-          </div>
+{{--          <div class="logo-image-big">--}}
+{{--            <img src="{{ asset('admin/img/logolrv.png') }}" alt="Ảnh của tôi">--}}
+{{--          </div>--}}
         </a>
       </div>
       <div class="sidebar-wrapper">
         <ul class="nav">
           <li>
-            <a href="{{ url('backend/backend') }}">
+            <a href="{{ url('backend') }}">
               <i class="fa fa-home" aria-hidden="true"></i>
               <p>Trang chủ</p>
             </a>
@@ -67,6 +67,12 @@
               <p>User</p>
             </a>
           </li>
+            <li>
+                <a href="{{ url('backend/customers') }}">
+                    <i class="fa fa-users" aria-hidden="true"></i>
+                    <p>Customers</p>
+                </a>
+            </li>
           <li>
             <a href="{{ url('backend/logout') }}">
               <i class="fa fa-sign-out" aria-hidden="true"></i>
@@ -151,7 +157,6 @@
               <div class="card-body">
                 <div class="table-responsive">
 
-
                   <!-- Add_edit_users -->
 
                     <div class="col-md-12">
@@ -212,8 +217,6 @@
 
                     <!-- Add_edit_users -->
 
-
-
                     </div>
               </div>
             </div>
@@ -223,7 +226,7 @@
           <div class="row">
             <div class="credits ml-auto">
               <span class="copyright" style="font-size: 18px;">
-                © 2023, made with <i class="fa fa-heart heart"></i> by Suplement Home
+                © 2024, made with <i class="fa fa-heart heart"></i> by Tphones
               </span>
             </div>
           </div>

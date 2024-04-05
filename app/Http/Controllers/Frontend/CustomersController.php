@@ -12,6 +12,7 @@ class CustomersController extends Controller
     public function login(){
         return view("frontend.form_customers_login");
     }
+
     public function loginPost(){
         $email = request()->get("email");
         $password = request()->get("password");
@@ -20,14 +21,18 @@ class CustomersController extends Controller
             if(Hash::check($password,$record->password)){
                 session()->put("customer_email",$record->email);
                 session()->put("customer_id",$record->id);
-                return redirect(url(''));
+                return redirect(url('http://localhost/PHP64_DoAn/public/'));
             }
         }
+
+        session()->flash('error', 'Email hoặc mật khẩu không đúng!');
         return redirect(url('customers/login?notify=invalid'));
     }
+
     public function register(){
         return view("frontend.form_customers_register");
     }
+
     public function registerPost(){
         $email = request()->get("email");
         $password = request()->get("password");
@@ -43,10 +48,11 @@ class CustomersController extends Controller
             return redirect(url('customers/register?notify=invalid'));
         return redirect(url('customers/login'));
     }
+
     public function logout(){
         session()->remove("customer_email");
         session()->remove("customer_id");
-        return redirect(url(''));
+        return redirect(url('http://localhost/PHP64_DoAn/public/'));
     }
 
 }

@@ -91,7 +91,7 @@ trait Cart {
         Session::forget('cart');
     }
 
-    public static function cartOrder(){
+    public static function cartOrder($payment_method){
         //$customer = Session::get('customer');
         $customer_id = Session::get('customer_id');
         //---
@@ -103,6 +103,8 @@ trait Cart {
             'price' => \App\Http\ShoppingCart\Cart::cartTotal(),
             'status' => 0,
             'date' => now(),
+            'payment_method' => $payment_method, // Lưu phương thức thanh toán vào cơ sở dữ liệu
+
         ]);
 
         // Insert record into order_details table
@@ -110,6 +112,7 @@ trait Cart {
             //tính lại giá thành sản phẩm sau khi giảm giá
             $price = $product['price'] - ($product['price'] * $product['discount'])/100;
             DB::table('orderdetails')->insert([
+                'customer_detail_id' => $customer_id,
                 'order_id' => $orderId,
                 'product_id' => $product['id'],
                 'quantity' => $product['quantity'],
@@ -120,5 +123,4 @@ trait Cart {
         // Clear cart
         Session::forget('cart');
     }
-
-}       
+}

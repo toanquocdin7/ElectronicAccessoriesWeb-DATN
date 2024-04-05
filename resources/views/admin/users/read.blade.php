@@ -1,17 +1,3 @@
-<!--
-=========================================================
-* Paper Dashboard 2 - v2.0.1
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/paper-dashboard-2
-* Copyright 2020 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
--->
 <!doctype html>
 <html lang="en">
 
@@ -37,11 +23,11 @@ Coded by www.creative-tim.com
   <div class="wrapper ">
     <div class="sidebar" data-color="white" data-active-color="danger">
       <div class="logo">
-         <a href="#" class="simple-text logo-normal">
-          <div class="logo-image-big">
-            <img src="{{ asset('admin/img/logolrv.png') }}">
-          </div>
-        </a>
+{{--         <a href="#" class="simple-text logo-normal">--}}
+{{--          <div class="logo-image-big">--}}
+{{--            <img src="{{ asset('admin/img/logolrv.png') }}">--}}
+{{--          </div>--}}
+{{--        </a>--}}
       </div>
       <div class="sidebar-wrapper">
         <ul class="nav">
@@ -81,6 +67,12 @@ Coded by www.creative-tim.com
               <p>User</p>
             </a>
           </li>
+            <li>
+                <a href="{{ url('backend/customers') }}">
+                    <i class="fa fa-users" aria-hidden="true"></i>
+                    <p>Customers</p>
+                </a>
+            </li>
           <li>
             <a href="{{ url('backend/logout') }}">
               <i class="fa fa-sign-out" aria-hidden="true"></i>
@@ -182,14 +174,6 @@ Coded by www.creative-tim.com
                     </tr>
                     @endforeach
                   </table>
-                  <!-- <ul class="pagination" style="padding-left: 10px;">
-                      <li class="page-item">
-                          <a href="http://localhost/php64_laravel_DoAn/public/backend/users?page=1" class="page-link">1</a>
-                      </li>
-                      <li class="page-item">
-                          <a href="http://localhost/php64_laravel_DoAn/public/backend/users?page=2" class="page-link">2</a>
-                      </li>
-                  </ul> -->
                   <style type="text/css">
                       .page-link{
                         color: #51cbce;
@@ -228,7 +212,7 @@ Coded by www.creative-tim.com
           <div class="row">
             <div class="credits ml-auto">
               <span class="copyright" style="font-size: 18px;">
-                © 2023, made with <i class="fa fa-heart heart"></i> by Suplement Home
+                © 2023, made with <i class="fa fa-heart heart"></i> by Tphones
               </span>
             </div>
           </div>

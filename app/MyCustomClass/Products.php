@@ -1,4 +1,4 @@
-<?php 
+<?php
     namespace App\MyCustomClass;
     use DB;
     use Request;
@@ -17,7 +17,7 @@
         	return $record;
         }
         public function modelUpdate($id){
-		$name = Request::get("name");//có thể sử dụng hàm request("name")
+		$name = Request::get("name"); //có thể sử dụng hàm request("name")
 		$category_id = Request::get("category_id");
 		$price = Request::get("price");
 		$discount = Request::get("discount");
@@ -41,7 +41,7 @@
 		}
 		}
 		public function modelCreate(){
-		$name = Request::get("name");//có thể sử dụng hàm request("name")
+		$name = Request::get("name"); //có thể sử dụng hàm request("name")
 		$category_id = Request::get("category_id");
 		$price = Request::get("price");
 		$discount = Request::get("discount");
@@ -57,26 +57,25 @@
 		}
 		//create bản ghi
 		DB::table("products")->insert(["name"=>$name,"category_id"=>$category_id,"description"=>$description,"content"=>$content,"hot"=>$hot,"photo"=>$photo,"price"=>$price,"discount"=>$discount]);
-		
+
 	}
-		public function modelDelete($id){
-		    //lấy ảnh cũ để xóa
-		    $record = DB::table("products")->where("id", $id)->first();
+    public function modelDelete($id){
+        //lấy ảnh cũ để xóa
+        $record = DB::table("products")->where("id", $id)->first();
 
-		    if ($record) {
-		        $photoPath = 'upload/products/'.$record->photo;
-		        if (file_exists($photoPath)) {
-		            if (is_file($photoPath)) {
-		                unlink($photoPath);//xóa tệp tin ảnh
-		            } elseif (is_dir($photoPath)) {
-		                // Nếu là thư mục, bạn có thể sử dụng hàm rmdir() để xóa thư mục
-		                // Hoặc bạn có thể sử dụng phương pháp khác để xóa các tệp tin trong thư mục trước khi xóa thư mục chính nếu cần thiết.
-		            }
-		        }
-		    }
+        if ($record) {
+            $photoPath = 'upload/products/'.$record->photo;
+            if (file_exists($photoPath)) {
+                if (is_file($photoPath)) {
+                    unlink($photoPath);//xóa tệp tin ảnh
+                } elseif (is_dir($photoPath)) {
+                    // Nếu là thư mục, bạn có thể sử dụng hàm rmdir() để xóa thư mục
+                    // Hoặc bạn có thể sử dụng phương pháp khác để xóa các tệp tin trong thư mục trước khi xóa thư mục chính nếu cần thiết.
+                }
+            }
+        }
 
-		    //xóa bản ghi
-		    DB::table("products")->where("id", $id)->delete();
-		}
-
+        //xóa bản ghi
+        DB::table("products")->where("id", $id)->delete();
+    }
 }

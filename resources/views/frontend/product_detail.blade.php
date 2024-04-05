@@ -50,7 +50,8 @@
                 </div>
                 <div class="product-cost">
                     <p class="text3">{{ number_format($record->price - ($record->price * $record->discount)/100) }}₫</p>
-                    <p class="text4">{{ number_format($record->price) }}₫</p>
+                    <p class="text4">{{ number_format($record->price) }}₫</p><br>
+                    <p style="color: orangered; font-size: 22px;" class="text3">Sale: {{ number_format($record->discount) }}%</p><br>
                 </div>
                 <div class="description">
                     <p><b>Mô tả :</b></p>
@@ -58,7 +59,7 @@
                 </div>
 
                 <div class="add-button">
-                    <a href="{{ asset('cart/buy/'.$record->id) }}"><input class="add-cart-button" type="button" value="THÊM VÀO GIỎ HÀNG"></a>
+                    <a href="{{ asset('cart/buy/'.$record->id) }}"><input class="add-cart-button" type="button" value="ADD TO CART"></a>
                 </div>
             </div>
             <div class="product-service">
@@ -82,7 +83,7 @@
                 </ul>
                 <ul class="service-item">
                     <i class="fa-sharp fa-solid fa-truck-fast fa-beat fa-2xl"></i>
-                    <h3 >Miễn phí vận chuyển với đơn hàng lớn hơn 1.000.000₫</h3>
+                    <h3 >Miễn phí vận chuyển với đơn hàng lớn hơn 2.000.000₫</h3>
                 </ul>
                 <ul class="service-item">
                     <i class="fa-solid fa-check fa-bounce fa-2xl"></i>
@@ -90,12 +91,12 @@
                 </ul>
                 <ul class="service-item">
                     <i class="fa-solid fa-rotate fa-spin fa-2xl"></i>
-                    <h3 >Đổi trả trong vòng 3 ngày, thủ tục đơn giản</h3>
+                    <h3 >Đổi trả trong vòng 7 ngày, thủ tục đơn giản</h3>
                 </ul>
             </div>
         </div>
         <!-- /Product detail -->
-        <div class="content-product">
+        <div style="margin-top: 80px;" class="content-product">
             <div class="content-product-title">
                 <p class="title-product">Chi tiết sản phẩm</p>
             </div>
@@ -103,6 +104,74 @@
                 <p>{!! $record->content !!}</p>
             </div>
         </div>
+
+    <!-- Discout -->
+    <div class="discout">
+        <!-- Categories 2 -->
+        <div style="margin-left: 10px; margin-top: 25px;" class="cate1">
+            <h2 style="font-size: 24px;">Sản phẩm liên quan</h2>
+            <ul>
+                @foreach($related_products as $related_product)
+                    <li style="height: 230px">
+                        <div class="tag">-{{ $related_product->discount }}%</div>
+                        <img style="width: 140px; margin-top: -30px;" src="{{ asset('upload/products/'.$related_product->photo) }}" alt="">
+                        <a class="link-product" href="{{ url('products/detail/'.$related_product->id) }}">
+                            <h4>{{ $related_product->name }}</h4>
+                            <p class="p1">{{ number_format($related_product->price - ($related_product->price * $related_product->discount)/100) }}đ</p>
+                            <p class="p3">{{ number_format($related_product->price) }}đ</p>
+                            <a href="{{ asset('cart/buy/'.$related_product->id) }}"><input class="add-to-cart" type="button" submit="" value="Add to cart"></a>
+                        </a>
+                    </li>
+                    <style type="text/css">
+                        .cate1 ul li a:hover{
+                            color: orange;
+                        }
+                        .cate1 ul li p{
+                            display: inline;
+                            margin-left: 10px;
+                        }
+                        .cate1 ul li{
+                            border: 1px solid #ccc;
+                            border-radius: 5px;
+                        }
+                        .cate1 ul li:hover{
+                            border: 1px solid orange;
+                        }
+                        .cate1 ul li .link-product{
+                            width: 170px;
+                        }
+                        .discout ul li a{
+                            position: unset;
+                        }
+                        .add-to-cart{
+                            margin-top: 10px;
+                            height: 30px;
+                            width: 180px;
+                            border: #fff 1px solid;
+                            background: orange;
+                            color: #fff;
+                            font-size: 16px;
+                            border-radius: 8px;
+                            cursor: pointer;
+                        }
+                        .add-to-cart:hover{
+                            border: orange 1px solid;
+                            background: #fff;
+                            color: orange;
+                        }
+                    </style>
+                @endforeach
+            </ul>
+        </div>
+        <!-- Banner cuối -->
+        <div class="sub-banner-next">
+            <img src="frontend/images/test_sub_banner3.webp" alt="">
+        </div>
+        <!-- /Banner cuối -->
+
+        <!-- /Categories 2 -->
+
+    </div>
 
         <!-- Footer -->
     <div class="footer">
@@ -132,7 +201,7 @@
             </ul>
 
             <ul class="footer4"><h2>KÊNH THÔNG TIN</h2>
-                <li>Suplement Brothers là thương hiệu cung cấp <br> thực phẩm bổ sung nổi tiếng tại Hà Nội và <br> TP Hồ Chí Minh</li>
+                <li>TPHONES là thương hiệu cung cấp <br> điện thoại & phụ kiện điện thoại nổi tiếng tại Hà Nội và <br> TP Hồ Chí Minh</li>
                 <div class="logo-footer"><a href="#"><i class="fa-brands fa-square-facebook fa-2xl" style="color: #346fd5;"></i></a></div>
                 <div class="logo-footer"><a href="#"><i class="fa-brands fa-square-google-plus fa-2xl" style="color: #d83b3b;"></i></a></div>
                 <div class="logo-footer"><a href="#"><i class="fa-brands fa-square-twitter fa-2xl" style="color: #0ea2e1;"></i></a></div>
@@ -140,14 +209,14 @@
 
         </div>
         <div class="raw-company">
-            <ul><h2>CÔNG TY TNHH SUPLEMENT BROTHERS</h2>
+            <ul><h2>CÔNG TY TNHH TPHONES</h2>
             <li>Trụ sở chính : Tầng 4 - Tòa nhà Hanoi Group - 442 Đội Cấn - Ba Đình - Hà Nội <br> Điện thoại : (04) 6674 2332 - (04) 3786 8904</li>
             <li>Văn phòng đại diện : Lầu 3 - Tòa nhà Lữ Gia - Số 70 Lữ Gia - P.15 - Q.11 - TP. HCM <br> Điện thoại : (08) 6680 9686 - (04) 3866 6276</li>
             </ul>
         </div>
 
         <div class="last-footer">
-            © Bản quyền thuộc về Suplement Brothers | Cung cấp bởi <a href="#" style="color: #CD2626;">SUPLEMENT HOME</a>
+            © Bản quyền thuộc về Tphones | Cung cấp bởi <a href="#" style="color: #CD2626;">TPHONES</a>
         </div>
     </div>
 

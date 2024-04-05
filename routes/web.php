@@ -34,9 +34,9 @@ Route::get('backend/logout', function () {
     return view('admin.login.form_login');
 });
 //admin
-//url: /public/backend -> khi đó sẽ load Controller HomeController
+//url: /public/backend -> khi đó sẽ load Controller HomePageController
 Route::get('backend', function () {
-    return view('admin.home.read');
+    return view('admin.home.homepage');
 })->middleware("check_login");
 //--
 
@@ -56,6 +56,15 @@ Route::post('backend/users/update-post/{id}',[UsersController::class,'updatePost
 //delete
 Route::get('backend/users/delete/{id}',[UsersController::class,'delete']);
 //---
+
+use App\Http\Controllers\Admin\CustomersController as Customers;
+Route::get('/backend/customers',[Customers::class, 'index'])->name('admin.customers.index');
+Route::get('/backend/customers/create',[Customers::class, 'create'])->name('customers.create');
+Route::post('/backend/customers/store',[Customers::class, 'store'])->name('admin.customers.store');
+Route::get('/backend/customers/{id}/edit',[Customers::class, 'edit'])->name('customers.edit');
+Route::put('/backend/customers/{id}',[Customers::class, 'update'])->name('customers.update');
+Route::delete('/backend/customers/{id}',[Customers::class, 'destroy'])->name('customers.destroy');
+
 
 
 //để sử dụng Controller thì phải khai báo ở đây
@@ -115,7 +124,13 @@ Route::get('backend/orders',[OrdersController::class,'read']);
 //detail
 Route::get('backend/orders/detail/{order_id}',[OrdersController::class,'detail']);
 //update trạng thái giao hàng
-Route::get('backend/orders/update/{id}',[OrdersController::class,'update']);
+//Route::get('backend/orders/update/{id}',[OrdersController::class,'update']);
+Route::post('backend/orders/update/{id}', [OrdersController::class, 'update']);
+
+//delete order
+Route::get('backend/orders/delete/{id}',[OrdersController::class,'delete']);
+
+Route::get('admin/orders/filter', [OrdersController::class, 'filterOrders'])->name('admin.orders.filter');
 
 
 //--
@@ -125,9 +140,13 @@ Route::get('backend/orders/update/{id}',[OrdersController::class,'update']);
 // // Thêm cái này thì khi ra trang backend/backend lại mất ảnh?
 //--
 
+// Admin homepage
+use \App\Http\Controllers\Admin\HomePageController;
+Route::get('/backend', [HomePageController::class, 'index'])->name('admin.home');
+
 //--
 //frontend
-//Sử dụng HomeController
+//Sử dụng HomePageController
 use \App\Http\Controllers\Frontend\HomeController;
 Route::get("", [HomeController::class, 'index']);
 
@@ -135,6 +154,7 @@ Route::get("", [HomeController::class, 'index']);
 use \App\Http\Controllers\Frontend\ProductsController as ProductsFrontend;
 Route::get('products/category/{category_id}',[ProductsFrontend::class,'category']);
 Route::get('products/detail/{id}',[ProductsFrontend::class,'detail']);
+Route::get('products/detail/{id}',[ProductsFrontend::class,'relatedProducts']);
 //tìm kiếm
 Route::get('products/search',[ProductsFrontend::class,'search']);
 Route::get('products/ajax-search',[ProductsFrontend::class,'ajax']);
@@ -169,6 +189,8 @@ Route::post('cart/update',[CartController::class,'update']);
 Route::get('cart/order',[CartController::class,'order']);
 // Chuyển đến trang thanh toán thành công
 Route::get('cart/success', [CartController::class, 'success'])->name('success');
+// Payment methods
+Route::post('/cart/payment', [CartController::class, 'payment'])->name('payment');
 
 
 //contact
@@ -181,3 +203,13 @@ Route::get('introduce',function(){
     return view('frontend.introduce');
 });
 
+//account
+Route::get('account',function(){
+    return view('frontend.account');
+});
+// Account
+use \App\Http\Controllers\Frontend\AccountController;
+Route::get('account/{id}', [AccountController::class, 'details']);
+
+//cancel
+Route::post('/cancel-order', [AccountController::class, 'cancelOrder'])->name('cancelOrder');

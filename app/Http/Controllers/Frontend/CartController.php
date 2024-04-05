@@ -16,22 +16,26 @@ class CartController extends Controller
         Cart::cartAdd($id);
         return redirect(url("cart"));
     }
+
     // Hiển thị danh sách giỏ hàng
     public function index(){
         // Lấy giỏ hàng
         $cart = Cart::cartList();
         return view("frontend.cart",["cart"=>$cart]);
     }
+
     // Xóa sản phẩm khỏi giỏ hàng
     public function delete($id){
         Cart::cartDelete($id);
         return redirect(url("cart"));
     }
+
     // Xóa toàn bộ sản phẩm khỏi giỏ hàng
     public function destroy(){
         Cart::cartDestroy();
         return redirect(url("cart"));
     }
+
     // Cập nhật số lượng sản phẩm
     public function update(){
         // Lấy giỏ hàng
@@ -45,6 +49,7 @@ class CartController extends Controller
         }
         return redirect(url("cart"));
     }
+
     // Thanh toán đơn hàng
     public function order(){
         // Kiểm tra xem user đăng nhập chưa, nếu chưa thì đề nghị đăng nhập
@@ -57,9 +62,22 @@ class CartController extends Controller
         else
             return redirect(url("customers/login"));
     }
+
     public function success()
     {
         // Xử lý trang thanh toán thành công ở đây và trả về view tương ứng
         return view('frontend.success');
     }
+
+    public function payment(Request $request){
+        // Xử lý dữ liệu từ form
+        $paymentMethod = $request->input('payment_method');
+
+        // Gọi hàm cartOrder để thanh toán đơn hàng và lưu phương thức thanh toán vào cơ sở dữ liệu
+        Cart::cartOrder($paymentMethod);
+
+        // Chuyển hướng đến trang success
+        return redirect(route("success"))->with('cartUrl', url("cart"));
+    }
+
 }

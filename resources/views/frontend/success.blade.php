@@ -27,7 +27,7 @@
             border: none;
         }
         .modal-confirm .modal-header {
-            background: #cd2626;
+            background: orange;
             border-bottom: none;
             position: relative;
             text-align: center;
@@ -73,7 +73,7 @@
         .modal-confirm .btn {
             color: #fff;
             border-radius: 4px;
-            background: #cd2626;
+            background: orange;
             text-decoration: none;
             transition: all 0.4s;
             line-height: normal;
@@ -126,7 +126,7 @@
                 @if(isset($order))
                     <a href="{{ route('order.view', ['order_id' => $order->id]) }}" class="btn btn-success">View Order Details <i class="material-icons">&#xE5C8;</i></a>
                 @endif
-                <a href="{{ url('/') }}" class="btn btn-info">Tiếp tục mua sắm</a>
+                <a href="{{ asset('') }}" class="btn btn-info">Tiếp tục mua sắm</a>
                 <p>Trở vê trang chủ sau <span id="countdown">5</span> giây</p>
             </div>
 
@@ -142,7 +142,7 @@
                         countdownElement.text(seconds);
                         if (seconds <= 0) {
                             clearInterval(countdownInterval);
-                            window.location.href = "{{ url('/') }}";
+                            window.location.href = "{{ asset('') }}";
                         }
                     }, 1000); // Update every 1 second (1000 milliseconds)
                 });

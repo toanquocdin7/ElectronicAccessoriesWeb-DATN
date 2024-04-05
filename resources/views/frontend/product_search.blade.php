@@ -31,8 +31,8 @@
 	            <ul>
 	              <h2 style="margin-top: 8px;">DANH MỤC</h2>
 	              <li><a href="{{ asset('') }}">Trang chủ</a></li>
-	              <li><a href="#">Giới thiệu</a></li>
-	              <li><a style="color: #CD2626;" href="#">Sản phẩm</a></li>
+	              <li><a href="{{ asset('introduce') }}">Giới thiệu</a></li>
+	              <li><a style="color: #CD2626; font-weight: bold" href="{{ asset('') }}">Sản phẩm</a></li>
 	              <li><a href="{{ asset('news') }}">Tin tức</a></li>
 	              <li><a href="{{ asset('contact') }}">Liên hệ</a></li>
 	            </ul>
@@ -73,7 +73,7 @@
                     <div class="logo-fb">
                         <i class="fa-brands fa-square-facebook fa-2xl" style="color: #3B5998;"></i>
                     </div>
-                    <li class="box-chat"><a href="#">Chat ngay để được tư vấn</a></li>
+                    <li class="box-chat"><a href="" target="_blank">Chat ngay để được tư vấn</a></li>
                 </ul>
             </div>
 
@@ -128,7 +128,7 @@
             </ul>
 
             <ul class="footer4"><h2>KÊNH THÔNG TIN</h2>
-                <li>Suplement Brothers là thương hiệu cung cấp <br> thực phẩm bổ sung nổi tiếng tại Hà Nội và <br> TP Hồ Chí Minh</li>
+                <li>TPHONES là thương hiệu cung cấp <br> điện thoại & phụ kiện điện thoại nổi tiếng tại Hà Nội và <br> TP Hồ Chí Minh</li>
                 <div class="logo-footer"><a href="#"><i class="fa-brands fa-square-facebook fa-2xl" style="color: #346fd5;"></i></a></div>
                 <div class="logo-footer"><a href="#"><i class="fa-brands fa-square-google-plus fa-2xl" style="color: #d83b3b;"></i></a></div>
                 <div class="logo-footer"><a href="#"><i class="fa-brands fa-square-twitter fa-2xl" style="color: #0ea2e1;"></i></a></div>
@@ -136,14 +136,14 @@
 
         </div>
         <div class="raw-company">
-            <ul><h2>CÔNG TY TNHH SUPLEMENT BROTHERS</h2>
+            <ul><h2>CÔNG TY TNHH TPHONES</h2>
             <li>Trụ sở chính : Tầng 4 - Tòa nhà Hanoi Group - 442 Đội Cấn - Ba Đình - Hà Nội <br> Điện thoại : (04) 6674 2332 - (04) 3786 8904</li>
             <li>Văn phòng đại diện : Lầu 3 - Tòa nhà Lữ Gia - Số 70 Lữ Gia - P.15 - Q.11 - TP. HCM <br> Điện thoại : (08) 6680 9686 - (04) 3866 6276</li>
             </ul>
         </div>
 
         <div class="last-footer">
-            © Bản quyền thuộc về Suplement Brothers | Cung cấp bởi <a href="#" style="color: #CD2626;">SUPLEMENT HOME</a>
+            © Bản quyền thuộc về TPHONES | Cung cấp bởi <a href="#" style="color: #CD2626;">TPHONES</a>
         </div>
     </div>
 

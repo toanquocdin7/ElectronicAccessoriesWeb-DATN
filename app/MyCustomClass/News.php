@@ -60,25 +60,24 @@ class News{
 		}
 		//create bản ghi
 		DB::table("news")->insert(["name"=>$name,"description"=>$description,"content"=>$content,"hot"=>$hot,"photo"=>$photo]);
-
 	}
 	public function modelDelete($id){
-		    //lấy ảnh cũ để xóa
-		    $record = DB::table("news")->where("id", $id)->first();
+        //lấy ảnh cũ để xóa
+        $record = DB::table("news")->where("id", $id)->first();
 
-		    if ($record) {
-		        $photoPath = 'upload/news/'.$record->photo;
-		        if (file_exists($photoPath)) {
-		            if (is_file($photoPath)) {
-		                unlink($photoPath);//xóa tệp tin ảnh
-		            } elseif (is_dir($photoPath)) {
-		                // Nếu là thư mục, bạn có thể sử dụng hàm rmdir() để xóa thư mục
-		                // Hoặc bạn có thể sử dụng phương pháp khác để xóa các tệp tin trong thư mục trước khi xóa thư mục chính nếu cần thiết.
-		            }
-		        }
-		    }
+        if ($record) {
+            $photoPath = 'upload/news/'.$record->photo;
+            if (file_exists($photoPath)) {
+                if (is_file($photoPath)) {
+                    unlink($photoPath);//xóa tệp tin ảnh
+                } elseif (is_dir($photoPath)) {
+                    // Nếu là thư mục, bạn có thể sử dụng hàm rmdir() để xóa thư mục
+                    // Hoặc bạn có thể sử dụng phương pháp khác để xóa các tệp tin trong thư mục trước khi xóa thư mục chính nếu cần thiết.
+                }
+            }
+        }
 
-		    //xóa bản ghi
-		    DB::table("news")->where("id", $id)->delete();
-		}
+        //xóa bản ghi
+        DB::table("news")->where("id", $id)->delete();
+    }
 }

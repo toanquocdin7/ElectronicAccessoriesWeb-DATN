@@ -1,7 +1,7 @@
     <!-- phần trên cùng -->
      <div class="top">
         <div class="top-1">
-            <div class="time"> <p>Giờ mở cửa: 8:00 - 20:00</p></div>
+            <div class="time"> <p>Giờ mở cửa: 8:00 - 21:00</p></div>
             <div class="wrap" style="position: absolute; left: 1000px; top: -5px;">
             <div class="header-search" style="margin-top: 0px"></div>
               <input style="color: #fff; font-family: monospace" type="text" onkeyup="ajaxSearch();" onkeypress="searchForm(event);" value="" placeholder="Nhập từ khóa tìm kiếm..." id="key" class="searchTerm">
@@ -126,7 +126,7 @@
         <div class="menu-top">
             <!-- logo -->
             <div class="logo">
-                <img src="{{ asset('frontend/images/logo.png') }}" alt="">
+                <img style="width: 116px; padding-left: 80px" src="{{ asset('frontend/images/logo-main-removebg.png ') }}" alt="">
             </div>
 
             <!-- Login, logout, cart -->
@@ -135,10 +135,19 @@
                     @php
                         $customer_email = session()->get('customer_email');
                         $customer_name = session()->get('customer_name');
+                        $customer_id = session()->get('customer_id');
+
+                        if(isset($customer_email)) {
+                            // Sử dụng hàm explode để tách phần trước và sau dấu @
+                            $email_parts = explode('@', $customer_email);
+
+                            // Lấy phần trước dấu @ làm tên khách hàng
+                            $customer_email_name = $email_parts[0];
+                        }
                         // Có thể dùng cách khác: customer_email = Session::get('customer_email');
                     @endphp
                     @if(isset($customer_email))
-                    <li style="margin-left: -150px"><a href="#"> Xin chào {{ $customer_email }}</a>&nbsp;&nbsp;<a href="{{ url('customers/logout') }}">Đăng xuất</a></li>
+                    <li style="margin-left: -150px"><a href="{{ url('account', ['id' => $customer_id]) }}"> Xin chào {{ $customer_email_name }} !</a>&nbsp;&nbsp;<a href="{{ url('customers/logout') }}">Đăng xuất</a></li>
                     @else
                     <li><a href="{{ url('customers/login') }}"> Đăng nhập</a></li>&nbsp; &nbsp; &nbsp;||
                     <li><a href="{{ url('customers/register') }}"> Đăng ký</a></li>
@@ -150,7 +159,7 @@
                     ?>
                     @if(Cart::cartNumber() > 0)
                       <li class="cart-lite">
-                        <a href="{{ asset('cart') }}"><i class="fas fa-shopping-basket">&nbsp;</i>Giỏ hàng</a>
+                        <a style="color: orange;" href="{{ asset('cart') }}"><i class="fas fa-shopping-basket">&nbsp;</i>({{ Cart::cartNumber() }})</a>
                         @php
                           $cart = Cart::cartList();
                         @endphp
@@ -158,7 +167,7 @@
                           <div class="cart-items">
                             @foreach($cart as $product)
                               <div class="cart-item">
-                                <div style="width: 100px; text-align: center;" class="product-name-cart"><a href="{{ url('products/detail/'.$product['id']) }}">{{ $product['name'] }}</a></div>
+                                <div style="width: 100px; text-align: center;" class="product-name-cart"><a style="font-size: 14px;" href="{{ url('products/detail/'.$product['id']) }}">{{ \Illuminate\Support\Str::words($product['name'], 10, '...') }}</a></div>
                                 <a href="{{ url('products/detail/'.$product['id']) }}">
                                     <img class="img-cart"
                                         alt="{{ $product['name'] }}"
@@ -175,9 +184,11 @@
                           <a href="{{ url('cart/order') }}" class="checkout-button">Thanh toán</a>
                         </div>
                       </li>
+                    @else
+                        <li class="cart-lite">
+                            <a href="{{ asset('cart') }}"><i class="fas fa-shopping-basket">&nbsp;</i>({{ Cart::cartNumber() ?? 0 }})</a>
+                        </li>
                     @endif
-
-
                     <style>
                       .cart-lite {
                         position: relative;
@@ -191,7 +202,7 @@
                         max-height: 350px;
                         padding: 10px;
                         background-color: #f9f9f9;
-                        border: 1px solid #CD2626;
+                        border: 1px solid orange;
                         border-radius: 5px;
                         z-index: 1;
                       }
@@ -227,6 +238,14 @@
                         word-wrap: break-word;
                       }
 
+                      .cart-item .product-name-cart {
+                          margin: 0;
+                          word-wrap: break-word;
+                          max-width: 160px; /* Độ rộng tối đa của tên sản phẩm */
+                          overflow: hidden; /* Ẩn phần vượt quá độ rộng */
+                          text-overflow: ellipsis; /* Hiển thị dấu ba chấm khi vượt quá độ rộng */
+                      }
+
                       .cart-item .delete-button {
                         color: red;
                         cursor: pointer;
@@ -237,15 +256,16 @@
                         display: block;
                         margin-top: 10px;
                         padding: 5px 10px;
-                        background-color: #CD2626;
+                        background-color: orange;
                         color: white;
-                        border: 1px solid #CD2626;
+                        border: 1px solid orange;
                         border-radius: 5px;
                         cursor: pointer;
+                          text-align: center;
                       }
 
                       .checkout-button:hover {
-                        color: #CD2626 !important;
+                        color: orange !important;
                         background-color: #fff;
                       }
                       .img-cart {
@@ -256,13 +276,9 @@
                       .info p{
                           font-family: monospace !important;
                           font-weight: bold;
-                          color: #CD2626;
+                          color: orange;
                       }
                     </style>
-
-
-
-
                 </ul>
             </div>
 
@@ -308,11 +324,11 @@
 
                 <li>
                     <i class="fas fa-truck fa-2x"></i>
-                    <h2>Miễn phí vận chuyển</h2><br>Trong bán kính 50km
+                    <h2>Free Ship</h2><br>Đơn hàng trên 1 triệu
                 </li>
                 <li>
                     <i class="fas fa-stopwatch fa-2x"></i>
-                    <h2>Đổi trả miễn phí</h2><br>Đổi trả sản phẩm trong 24h
+                    <h2>Đổi trả miễn phí</h2><br>Đổi trả nếu sản phẩm lỗi
                 </li>
                 <li>
                     <i class="fas fa-credit-card fa-2x"></i>
@@ -320,7 +336,7 @@
                 </li>
                 <li>
                     <i class="fas fa-comment-dots fa-2x"></i>
-                    <h2>Tư vấn 24/7</h2><br>Hotline:<p style="color: #CD2626; font-weight: bold; position: absolute; right: -8px; top: 185px;">0965 814 299</p>
+                    <h2>Chat 24/7</h2><br>Hotline:<p style="color: #CD2626; font-weight: bold; position: absolute; right: -8px; top: 185px;">0366 936 128</p>
                 </li>
             </ul>
         </div>

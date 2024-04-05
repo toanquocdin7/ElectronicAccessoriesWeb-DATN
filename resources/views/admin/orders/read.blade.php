@@ -1,17 +1,3 @@
-<!--
-=========================================================
-* Paper Dashboard 2 - v2.0.1
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/paper-dashboard-2
-* Copyright 2020 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
--->
 <!doctype html>
 <html lang="en">
 
@@ -37,11 +23,11 @@ Coded by www.creative-tim.com
   <div class="wrapper ">
     <div class="sidebar" data-color="white" data-active-color="danger">
       <div class="logo">
-         <a href="#" class="simple-text logo-normal">
-          <div class="logo-image-big">
-            <img src="{{ asset('admin/img/logolrv.png') }}">
-          </div>
-        </a>
+{{--         <a href="#" class="simple-text logo-normal">--}}
+{{--          <div class="logo-image-big">--}}
+{{--            <img src="{{ asset('admin/img/logolrv.png') }}">--}}
+{{--          </div>--}}
+{{--        </a>--}}
       </div>
       <div class="sidebar-wrapper">
         <ul class="nav">
@@ -81,6 +67,12 @@ Coded by www.creative-tim.com
               <p>User</p>
             </a>
           </li>
+            <li>
+                <a href="{{ url('backend/customers') }}">
+                    <i class="fa fa-users" aria-hidden="true"></i>
+                    <p>Customers</p>
+                </a>
+            </li>
           <li>
             <a href="{{ url('backend/logout') }}">
               <i class="fa fa-sign-out" aria-hidden="true"></i>
@@ -160,6 +152,16 @@ Coded by www.creative-tim.com
       		$record = DB::table("customers")->where("id","=",$customer_id)->first();
       		return isset($record->name) ? $record->name : "";
       	}
+
+        function getCustomerInfo($customer_id){
+            $record = DB::table("customers")->where("id","=",$customer_id)->first();
+            return isset($record->phone) ? $record->phone : "";
+        }
+
+        function getCustomerAddress($customer_id){
+            $record = DB::table("customers")->where("id","=",$customer_id)->first();
+            return isset($record->address) ? $record->address : "";
+        }
       @endphp
       <div class="content">
         <div class="row">
@@ -170,42 +172,114 @@ Coded by www.creative-tim.com
               </div>
               <div class="card-body">
                 <div class="table-responsive">
-                  <table class="table">
-                    <tr style="font-weight: bold;">
-                        <td>Tên khách hàng</td>
-                        <td>Thời gian</td>
-                        <td>Giá tiền</td>
-                        <td>Trạng thái</td>
-                        <td style="width: 100px;"></td>
-                    </tr>
-                    @foreach($data as $row)
-                    <tr>
-                        <td>{{ getCustomerName($row->customer_id) }}</td>
-                        <td>{{ date("d/m/Y", strtotime($row->date)) }}</td>
-                        <td>{{ number_format($row->price) }}đ</td>
-                        <td style="text-align: center;">
-							@if($row->status == 1)
-	                            <span style="color: red; margin-left: -190px;" >Đã giao hàng</span>
-	                        @else
-	                            <span style="margin-left: -190px">Chưa giao hàng</span>
-	                        @endif
-                    </td>
-                    <td style="text-align:center;">
-                        @if($row->status == 0)
-                            <a href="{{ url('backend/orders/detail/'.$row->id) }}" class="label label-warning">Chi tiết</a>
+                    <table class="table">
+                        <tr style="font-weight: bold;">
+                            <td>Tên khách hàng</td>
+                            <td>Số điện thoại</td>
+                            <td>Địa chỉ</td>
+                            <td>Ngày đặt</td>
+                            <td>Trạng thái</td>
+                            <td>Phương thức</td>
+                            <td>Tổng tiền</td>
+                            <td style="width: 100px;">Action</td>
+                        </tr>
+                        @php
+                            $totalDay = 0;
+                            $totalMonth = 0;
+                        @endphp
+
+                        <form action="{{ route('admin.orders.filter') }}" method="GET">
+
+                            <p>Từ ngày <input type="date" name="start_date"></p>
+                            <p>Đến ngày <input type="date" name="end_date"></p>
+                            <button type="submit">Lọc đơn hàng</button>
+                        </form>
+                        @if(isset($orders))
+                            @if(isset($formattedStartDate) && isset($formattedEndDate))
+                                <p style="text-align: center; font-weight: bold">Đơn hàng từ ngày {{ $formattedStartDate }} đến ngày {{ $formattedEndDate }}</p>
+                            @endif
+                            <ul>
+                                @foreach($orders as $order)
+                                    <tr>
+                                        <td>{{ getCustomerName($order->customer_id) }}</td>
+                                        <td>{{ getCustomerInfo($order->customer_id) }}</td>
+                                        <td>{{ getCustomerAddress($order->customer_id) }}</td>
+                                        <td>{{ date("d/m/Y", strtotime($order->date)) }}</td>
+                                        @if($order->status == 0)
+                                            <td>Chưa giao hàng</td>
+                                        @elseif($order->status == 1)
+                                            <td style="color: orange;" >Đang vận chuyển</td>
+                                        @elseif($order->status == 2)
+                                            <td style="color: red;" >Đã giao hàng</td>
+                                        @elseif($order->status == 3)
+                                            <td style="color: red;" >Hoàn trả</td>
+                                        @endif
+                                        @if($order->payment_method == 0)
+                                            <td>Online</td>
+                                        @else
+                                            <td>Tiền mặt</td>
+                                        @endif
+                                        <td>{{ number_format($order->price) }}đ</td>
+                                        <td style="text-align:center;">
+                                            <a href="{{ url('backend/orders/detail/'.$order->id) }}" class="label label-warning">Chi tiết</a>
+                                            <hr>
+                                            <a href="{{ url('backend/orders/delete/'.$order->id) }}" class="label label-danger">Xóa</a>
+                                        </td>
+                                    </tr>
+                                    @php
+                                        $totalDay += $order->price;
+                                        $totalMonth += $order->price;
+                                    @endphp
+                                @endforeach
+                            </ul>
+                        @else
+                            <ul>
+                                @foreach($data as $order)
+                                    <tr>
+                                        <td>{{ getCustomerName($order->customer_id) }}</td>
+                                        <td>{{ getCustomerInfo($order->customer_id) }}</td>
+                                        <td>{{ getCustomerAddress($order->customer_id) }}</td>
+                                        <td>{{ date("d/m/Y", strtotime($order->date)) }}</td>
+                                        <td style="text-align: center;">
+                                            @if($order->status == 0)
+                                                <span style="margin-left: -36px">Chưa giao hàng</span>
+                                            @elseif($order->status == 1)
+                                                <span style="color: orange; margin-left: -36px;" >Đang vận chuyển</span>
+                                            @elseif($order->status == 2)
+                                                <span style="color: red; margin-left: -36px;" >Đã giao hàng</span>
+                                            @elseif($order->status == 3)
+                                            <span style="color: red; margin-left: -36px;" >Hoàn trả</span>
+                                            @endif
+                                        </td>
+                                        @if($order->payment_method == 0)
+                                            <td>Online</td>
+                                        @else
+                                            <td>Tiền mặt</td>
+                                        @endif
+                                        <td>{{ number_format($order->price) }}đ</td>
+                                        <td style="text-align:center;">
+                                            <a href="{{ url('backend/orders/detail/'.$order->id) }}" class="label label-warning">Chi tiết</a>
+                                            <hr>
+                                            <a href="{{ url('backend/orders/delete/'.$order->id) }}" class="label label-danger">Xóa</a>
+                                        </td>
+                                    </tr>
+                                    @php
+                                        $totalDay += $order->price;
+                                        $totalMonth += $order->price;
+                                    @endphp
+                                @endforeach
+                            </ul>
                         @endif
-                    </td>
-                    </tr>
-                    @endforeach
-                  </table>
-                  <!-- <ul class="pagination" style="padding-left: 10px;">
-                      <li class="page-item">
-                          <a href="http://localhost/php64_laravel_DoAn/public/backend/users?page=1" class="page-link">1</a>
-                      </li>
-                      <li class="page-item">
-                          <a href="http://localhost/php64_laravel_DoAn/public/backend/users?page=2" class="page-link">2</a>
-                      </li>
-                  </ul> -->
+
+                        <tr style="font-weight: bold;">
+                            <td colspan="2">Tổng doanh thu:</td>
+                            <td></td>
+                            <td></td>
+                            <td>{{ number_format($totalMonth) }}đ</td>
+                            <td colspan="2"></td>
+                        </tr>
+                    </table>
+
                   <style type="text/css">
                       .page-link{
                         color: #51cbce;
@@ -234,19 +308,10 @@ Coded by www.creative-tim.com
                         }
 
                   </style>
-                  {{ $data->render() }}
                 </div>
               </div>
             </div>
           </div>
-      <footer class="footer" style="margin-top:100px !important ;position: absolute; bottom: 0; width: -webkit-fill-available;">
-        <div class="container-fluid">
-          <div class="row">
-            <div class="credits ml-auto">
-            </div>
-          </div>
-        </div>
-      </footer>
     </div>
   </div>
   <!--   Core JS Files   -->

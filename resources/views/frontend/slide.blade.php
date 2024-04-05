@@ -5,8 +5,8 @@
             <ul>
               <h2 style="margin-top: 8px;">DANH MỤC</h2>
               <li><a href="{{ asset('') }}">Trang chủ</a></li>
-              <li><a href="#">Giới thiệu</a></li>
-              <li><a href="#">Sản phẩm</a></li>
+              <li><a href="{{ asset('/introduce') }}">Giới thiệu</a></li>
+              <li><a href="{{ asset('') }}">Sản phẩm</a></li>
               <!-- Truy vấn cơ sở dữ liệu trực tiếp -->
                             @php
                                 $categories = DB::table("categories")->where("parent_id","=",0)->orderBy("id", "desc")->get();
@@ -27,25 +27,25 @@
                                 @endif
                             </li>
                             @endforeach
-              <li><a href="#">Tin tức</a></li>
+              <li><a href="{{ asset('news') }}">Tin tức</a></li>
               <li><a href="{{ asset('contact') }}">Liên hệ</a></li>
             </ul>
           </div>
           <!-- /Menu-main-left -->
 
           <!-- Banner -->
-          <div style="margin-top: 130px" class="banner">
-            <img src="{{ asset('frontend/images/banner.webp') }}" class="banner-show">
+          <div style="margin-top: 90px" class="banner">
+            <img style="height: 450px" src="{{ asset('frontend/images/banner-slide.png') }}" class="banner-show">
             <div class="next"><i class="fa-solid fa-circle-right"></i></div>
             <div class="prev"><i class="fa-solid fa-circle-left"></i></div>
           </div>
           <script>
             $(document).ready(function() {
               let arr_banner = [];
-              arr_banner[0] = "frontend/images/banner.webp";
-              arr_banner[1] = "frontend/images/banner1.webp";
-              arr_banner[2] = "frontend/images/banner2.webp";
-              arr_banner[3] = "frontend/images/banner3.webp";
+              arr_banner[0] = "frontend/images/banner-slide.png";
+              arr_banner[1] = "frontend/images/banner-slide1.jpg";
+              arr_banner[2] = "frontend/images/banner-slide2.jpg";
+              arr_banner[3] = "frontend/images/banner-slide3.jpg";
               let n = 0;
 
               // Hàm chuyển đổi hình ảnh trong banner

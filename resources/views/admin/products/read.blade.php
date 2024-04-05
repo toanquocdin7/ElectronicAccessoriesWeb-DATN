@@ -1,17 +1,3 @@
-<!--
-=========================================================
-* Paper Dashboard 2 - v2.0.1
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/paper-dashboard-2
-* Copyright 2020 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
--->
 <!doctype html>
 <html lang="en">
 
@@ -37,11 +23,11 @@ Coded by www.creative-tim.com
   <div class="wrapper ">
     <div class="sidebar" data-color="white" data-active-color="danger">
       <div class="logo">
-         <a href="#" class="simple-text logo-normal">
-          <div class="logo-image-big">
-            <img src="{{ asset('admin/img/logolrv.png') }}">
-          </div>
-        </a>
+{{--         <a href="#" class="simple-text logo-normal">--}}
+{{--          <div class="logo-image-big">--}}
+{{--            <img src="{{ asset('admin/img/logolrv.png') }}">--}}
+{{--          </div>--}}
+{{--        </a>--}}
       </div>
       <div class="sidebar-wrapper">
         <ul class="nav">
@@ -81,6 +67,12 @@ Coded by www.creative-tim.com
               <p>User</p>
             </a>
           </li>
+            <li>
+                <a href="{{ url('backend/customers') }}">
+                    <i class="fa fa-users" aria-hidden="true"></i>
+                    <p>Customers</p>
+                </a>
+            </li>
           <li>
             <a href="{{ url('backend/logout') }}">
               <i class="fa fa-sign-out" aria-hidden="true"></i>
@@ -166,9 +158,20 @@ Coded by www.creative-tim.com
                 <div class="table-responsive">
                       <div class="col-md-12">
     <div style="margin-bottom:5px;">
-        <a href="{{ url('backend/products/create') }}" class="btn btn-primary">Create</a>
+        <a href="{{ url('backend/products/create') }}" class="btn btn-primary">Thêm sản phẩm</a>
     </div>
-    <div class="panel panel-primary">
+      <form action="{{ url('backend/products') }}" method="GET">
+          <span style="font-size: 18px;">Lọc sản phẩm theo: </span>
+          <select style="margin-bottom: 10px; font-size: 18px;" name="category" onchange="this.form.submit()">
+              <option value="">Tất cả danh mục</option>
+              @foreach($categories as $category)
+                  <option value="{{ $category->id }}" {{ Request::input('category') == $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
+              @endforeach
+          </select>
+      </form>
+
+
+                          <div class="panel panel-primary">
         <div class="panel-heading"></div>
         <div class="panel-body">
             <table class="table table-bordered table-hover" style="text-align: center;">
@@ -177,7 +180,7 @@ Coded by www.creative-tim.com
                     <th>Name</th>
                     <th style="width: 180px;">Category</th>
                     <th style="width: 100px">Price</th>
-                    <th style="width: 80">Discout</th>
+                    <th style="width: 80px">Discout</th>
                     <th style="width: 80px">Hot</th>
                     <th style="width:100px;"></th>
                 </tr>
@@ -208,22 +211,16 @@ Coded by www.creative-tim.com
                 @endforeach
             </table>
             <style type="text/css">
-                .pagination{padding:0px; margin:0px;}
+                .flex.items-center.justify-between{
+                    text-align: center;
+                    padding-top: 20px;
+                }
             </style>
             {{ $data->render() }}
         </div>
     </div>
 </div>
-
-                  <!-- <ul class="pagination" style="padding-left: 10px;">
-                      <li class="page-item">
-                          <a href="http://localhost/php64_laravel_DoAn/public/backend/categories?page=1" class="page-link">1</a>
-                      </li>
-                      <li class="page-item">
-                          <a href="http://localhost/php64_laravel_DoAn/public/backend/categories?page=2" class="page-link">2</a>
-                      </li>
-                  </ul> -->
-                  <style type="text/css">
+  <style type="text/css">
                       .page-link{
                         color: #51cbce;
                         font-size: 16px;
@@ -251,7 +248,6 @@ Coded by www.creative-tim.com
                         }
 
                   </style>
-                  {{ $data->render() }}
                 </div>
               </div>
             </div>
@@ -268,7 +264,7 @@ Coded by www.creative-tim.com
       </footer>
     </div>
   </div>
-  <div class="cpr">© 2023, made with <i class="fa fa-heart heart"></i> by Suplement Home</div>
+  <div class="cpr">© 2023, made with <i class="fa fa-heart heart"></i> by Tphones</div>
   <style type="text/css">
     .cpr{
       float: right ;

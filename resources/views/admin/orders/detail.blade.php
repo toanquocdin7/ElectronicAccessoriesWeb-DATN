@@ -1,17 +1,3 @@
-<!--
-=========================================================
-* Paper Dashboard 2 - v2.0.1
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/paper-dashboard-2
-* Copyright 2020 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
--->
 <!doctype html>
 <html lang="en">
 
@@ -37,16 +23,16 @@ Coded by www.creative-tim.com
   <div class="wrapper ">
     <div class="sidebar" data-color="white" data-active-color="danger">
       <div class="logo">
-         <a href="#" class="simple-text logo-normal">
-          <div class="logo-image-big">
-            <img src="{{ asset('admin/img/logolrv.png') }}">
-          </div>
-        </a>
+{{--         <a href="#" class="simple-text logo-normal">--}}
+{{--          <div class="logo-image-big">--}}
+{{--            <img src="{{ asset('admin/img/logolrv.png') }}">--}}
+{{--          </div>--}}
+{{--        </a>--}}
       </div>
       <div class="sidebar-wrapper">
         <ul class="nav">
           <li>
-            <a href="{{ url('backend/backend') }}">
+            <a href="{{ url('backend') }}">
               <i class="fa fa-home" aria-hidden="true"></i>
               <p>Trang chủ</p>
             </a>
@@ -81,6 +67,12 @@ Coded by www.creative-tim.com
               <p>User</p>
             </a>
           </li>
+            <li>
+                <a href="{{ url('backend/customers') }}">
+                    <i class="fa fa-users" aria-hidden="true"></i>
+                    <p>Customers</p>
+                </a>
+            </li>
           <li>
             <a href="{{ url('backend/logout') }}">
               <i class="fa fa-sign-out" aria-hidden="true"></i>
@@ -90,7 +82,7 @@ Coded by www.creative-tim.com
         </ul>
       </div>
     </div>
-    <div class="main-panel" style="height: 100vh;">
+    <div class="main-panel" style="height: 150vh;">
       <!-- Navbar -->
       <nav class="navbar navbar-expand-lg navbar-absolute fixed-top navbar-transparent">
         <div class="container-fluid">
@@ -183,14 +175,34 @@ Coded by www.creative-tim.com
     $customer = getCustomer($order->customer_id)
 @endphp
     <div style="margin-top: 100px;" class="col-md-12">
-    <div style="margin-bottom:5px;">
-        <a href="#" onclick="history.go(-1);" class="btn btn-primary">Quay lại</a>
-        @if($order->status == 0)
-        <a href="{{ url('backend/orders/update/'.$order->id) }}" class="btn btn-danger">Thực hiện giao hàng</a>
-        @endif
-    </div>
-    <div class="panel panel-primary">
-        <div class="panel-heading">Thông tin đơn hàng</div>
+{{--    <div style="margin-bottom:5px;">--}}
+{{--        <a href="{{ url('backend/orders') }}" class="btn btn-primary">Quay lại</a>--}}
+{{--        @if($order->status == 0)--}}
+{{--        <a href="{{ url('backend/orders/update/'.$order->id) }}" class="btn btn-danger">Thực hiện giao hàng</a>--}}
+{{--        @endif--}}
+{{--    </div>--}}
+        <div style="margin-bottom:5px;">
+            <h3 class="panel-heading" style="text-align: center">Cập nhật trạng thái đơn hàng</h3>
+            <div class="panel-body">
+                <form action="{{ url('backend/orders/update/'.$order->id) }}" method="POST">
+                    @csrf
+                    <div class="form-group">
+                        <label for="status">Trạng thái đơn hàng:</label>
+                        <select class="form-control" name="status" id="status" style="width: 220px;">
+                            <option value="0" {{ $order->status == 0 ? 'selected' : '' }}>Chưa giao hàng</option>
+                            <option value="1" {{ $order->status == 1 ? 'selected' : '' }}>Đang vận chuyển</option>
+                            <option value="2" {{ $order->status == 2 ? 'selected' : '' }}>Đã giao hàng</option>
+                            <option value="3" {{ $order->status == 3 ? 'selected' : '' }}>Hoàn trả</option>
+                        </select>
+                    </div>
+                    <a href="{{ url('backend/orders') }}" class="btn btn-primary">Quay lại</a>
+                    <button type="submit" class="btn btn-primary">Cập nhật</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="panel panel-primary">
+        <h3 class="panel-heading" style="text-align: center">Thông tin đơn hàng</h3>
         <div class="panel-body">
             <table class="table">
                 <tr>
@@ -202,7 +214,7 @@ Coded by www.creative-tim.com
                     <td>{{ isset($customer->email) ? $customer->email : "" }}</td>
                 </tr>
                 <tr>
-                    <td>ngày mua</td>
+                    <td>Ngày mua</td>
                     <td>{{ isset($order->date) ? date("d/m/Y", strtotime($order->date)) : "" }}</td>
                 </tr>
                 <tr>
@@ -210,14 +222,39 @@ Coded by www.creative-tim.com
                     <td>{{ isset($order->price) ? $order->price : "" }}</td>
                 </tr>
                 <tr>
-                    <td>Trạng thái giao hàng</td>
-                    <td>{{ $order->status == 1 ? "Đã giao hàng" : "Chưa giao hàng" }}</td>
+                    <td>Địa chỉ</td>
+                    <td>{{ isset($customer->address) ? $customer->address : "" }}</td>
                 </tr>
+                <tr>
+                    <td>Số điện thoại</td>
+                    <td>{{ isset($customer->phone) ? $customer->phone : "" }}</td>
+                </tr>
+                <tr>
+                    <td>Trạng thái giao hàng</td>
+                    @if($order->status == 0)
+                        <td>Chưa giao hàng</td>
+                    @elseif($order->status == 1)
+                        <td style="color: orange;" >Đang vận chuyển</td>
+                    @elseif($order->status == 2)
+                        <td style="color: red;" >Đã giao hàng</td>
+                    @elseif($order->status == 3)
+                        <td style="color: red;" >Hoàn trả</td>
+                    @endif
+                </tr>
+                <tr>
+                    <td>Phương thức thanh toán</td>
+                    @if($order->payment_method == 0)
+                        <td>Online</td>
+                    @else
+                        <td>Tiền mặt</td>
+                    @endif
+                </tr>
+
             </table>
         </div>
     </div>
     <div class="panel panel-primary">
-        <div class="panel-heading">Chi tiết đơn hàng</div>
+        <h3 class="panel-heading" style="text-align: center">Chi tiết đơn hàng</h3>
         <div class="panel-body">
             <table class="table table-bordered table-hover">
                 <tr>
@@ -246,12 +283,18 @@ Coded by www.creative-tim.com
             </table>
         </div>
     </div>
-</div>
-      <footer class="footer" style="margin-top:100px !important ;position: absolute; bottom: 0; width: -webkit-fill-available;">
+    <div>
+        <hr>
+        <h3>Tổng giá đơn hàng: {{ isset($order->price) ? $order->price : "" }} VND</h3>
+        <hr>
+    </div>
+        <hr>
+
+    </div>
+      <footer class="footer" style="margin-top:100px !important ;position: absolute; bottom: 0;">
         <div class="container-fluid">
           <div class="row">
             <div class="credits ml-auto">
-
             </div>
           </div>
         </div>
@@ -273,5 +316,7 @@ Coded by www.creative-tim.com
   <!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="{{ asset('admin/js/paper-dashboard.min.js?v=2.0.1') }}" type="text/javascript"></script>
 </body>
+
+
 
 </html>

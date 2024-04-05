@@ -20,20 +20,22 @@
         <div class="form-container sign-up-container">
         </div>
         <div class="form-container sign-in-container">
+
+
             <form method="post" action="{{ url('customers/login-post') }}">
 
                 @csrf
                 <h1>Đăng nhập</h1>
-                <!-- <div class="social-container">
-                    <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-                    <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
-                </div>
-                <span>or use your account</span> -->
                 <input type="email" placeholder="Email" class="input-control" name="email" required="" />
                 <input type="password" placeholder="Password" class="input-control" name="password" required="" />
+                <!-- Kiểm tra và hiển thị thông báo lỗi -->
+                @if(session()->has('error'))
+                    <div class="alert alert-danger" style="margin-bottom: 15px; color: red">
+                        {{ session('error') }}
+                    </div>
+                @endif
                 <a href="#">Quên mật khẩu?</a>
-                <input style="background-color: #FF4B2B; color: #fff ; font-size: 15px; cursor: pointer; border: 1px solid #FF4B2B; border-radius: 20px" type="submit" class="button" value="Đăng nhập">
+                <input style="background-color: orange; color: #fff ; font-size: 15px; cursor: pointer; border: 1px solid orange; border-radius: 20px" type="submit" class="button" value="Đăng nhập">
             </form>
         </div>
         <div class="overlay-container">
@@ -42,10 +44,10 @@
                     <h1>Chào mừng bạn đã trở lại!</h1>
                     <button class="ghost" id="signIn">Đăng nhập</button>
                 </div>
-                <div class="overlay-panel overlay-right">
-                    <h1>Xin chào ^^!</h1>
-                    <p>Hãy điền các thông tin của bạn và gia nhập với chúng tôi nào</p>
-                    <a  href="{{ url('customers/register') }}"><button style="background-color: #CC3300; color: #fff; font-size: 20px; line-height: 20px; cursor: pointer; border: 1px solid #FF4B2B; border-radius: 20px" class="ghost" id="signUp">Đăng kí tài khoản</button></a>
+                <div style="background-color: #333" class="overlay-panel overlay-right">
+                    <h1>Chào mừng đến với Thế Giới Phụ Kiện</h1>
+                    <p>Hãy điền các thông tin của bạn và gia nhập với chúng tôi nhé</p>
+                    <a  href="{{ url('customers/register') }}"><button style="background-color: orange; color: #fff; font-size: 20px; line-height: 20px; cursor: pointer; border: 10px solid orange; border-radius: 20px" class="ghost" id="signUp">Đăng kí ngay</button></a>
                 </div>
             </div>
         </div>

@@ -20,14 +20,14 @@
         .main-text {
             margin-top: 50px;
             font-size: 30px;
-            color: #cd2626;
+            color: orange;
             font-weight: bolder;
         }
         .sub-text {
             margin-top: 15px;
             margin-bottom: 15px;
             font-size: 20px;
-            color: #cd2626;
+            color: orange;
             font-weight: bolder;
         }
     </style>
@@ -35,17 +35,18 @@
 <body>
 @extends("frontend.layout_home")
 @section("do-du-lieu-vao-layout")
-    <h1 class="main-text">Trụ sở chính</h1>
+    <h1 class="main-text">Trụ sở chính</h1> <br>
     <p>
-        <h2 class="sub-text">CÔNG TY TNHH SUPLEMENT HOME</h2>
-        <p>Trụ sở chính : Tầng 14-16-18-19 Tòa nhà Viwaseen, 48 P. Tố Hữu, Trung Văn, Nam Từ Liêm, Hà Nội, Việt Nam
-        </p>
+        <h2 class="sub-text">CÔNG TY TNHH TPHONES</h2>
+        <p> Trụ sở chính: Toà nhà Viwaseen, 48 Tố Hữu, Nam Từ Liêm, Hà Nội</p> <br>
+        <p>TP.HCM: Tòa nhà Lim Tower 3, 29A Nguyễn Đình Chiểu, Quận 1, TP. HCM</p> <br>
+        <p>Singapore: 16 Collyer Quay, #12-00 Income@Raffles, Singapore 049318</p>
         <br>
-        <p>Điện thoại : (09) 65 814 299</p>
+        <p>Điện thoại : (84) 366 936 128</p>
     </p>
     <div class="row">
         <div>
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3724.8621076129175!2d105.79173647504788!3d20.998163888829104!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135acceab97eb83%3A0x4f8b021cef05e348!2zQ8O0bmcgVHkgxJDhuqd1IFTGsCBDw7RuZyBOZ2jhu4cgVGjDoG5oIEPDtG5n!5e0!3m2!1svi!2sus!4v1701663957942!5m2!1svi!2sus" style="border:0; width: 100%; height: 500px; margin-top: 50px" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3724.8659405900976!2d105.79186327510433!3d20.99801028064369!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135acba7ddb0f43%3A0xe7d7c05f85f830a!2zNDggUC4gVOG7kSBI4buvdSwgVHJ1bmcgVsSDbiwgVOG7qyBMacOqbSwgSMOgIE7hu5lpIDEwMDAwLCBWaeG7h3QgTmFt!5e0!3m2!1svi!2s!4v1706460104738!5m2!1svi!2s" style="border:0; width: 100%; height: 500px; margin-top: 50px" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
     </div>
 @endsection

@@ -46,6 +46,5 @@ class CategoriesController extends Controller
         // Xóa bản ghi
         $record = Categories::where("id", "=", $id)->orWhere("parent_id","=",$id)->delete();
         return redirect(url('backend/categories'));
-
     }
 }
